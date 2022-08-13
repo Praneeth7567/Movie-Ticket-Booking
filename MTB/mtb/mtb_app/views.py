@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -5,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db import IntegrityError
 from .models import User, Movie, Theater, Show, booked
 from django.core.paginator import Paginator
-import json
+from datetime import datetime
 
 def index(request):
     movies = Movie.objects.all()
@@ -18,13 +19,9 @@ def index(request):
 
 def login_view(request):
     if request.method == "POST":
-
-        # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
-
-        # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
@@ -45,16 +42,12 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "mtb_app/register.html", {
                 "message": "Passwords must match."
             })
-
-        # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
@@ -73,9 +66,8 @@ def profile(request):
     })
 
 def bookings(request):
-    
     return render(request, "mtb_app/bookings.html", {
-        "bookings": booked.objects.filter(user = request.user)
+        "bookings": booked.objects.filter(user = request.user).order_by('-booked_time')
     })
 
 def theater(request):
@@ -102,7 +94,6 @@ def bookmovie(request,id):
                 "message": "Tickets successfully booked. Check 'My bookings' for all bookings"
     })
         else:
-            num = show.movie.id
             return render(request, "mtb_app/bookmovie.html", {
                 "movie" : Movie.objects.get(id=id),
                 "slots": Show.objects.filter(movie_id = id),
@@ -110,7 +101,7 @@ def bookmovie(request,id):
     })
     return render(request, "mtb_app/bookmovie.html", {
         "movie" : Movie.objects.get(id=id),
-        "slots": Show.objects.filter(movie_id = id)
+        "slots": Show.objects.filter(movie_id = id,date__gte = datetime.now(),seats_avl__gte =0)
     })
 
     
