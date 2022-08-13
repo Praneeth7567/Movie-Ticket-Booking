@@ -1,0 +1,50 @@
+{% extends "mtb_app/layout.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block body %}
+<center>
+<div>
+    {% if message %}
+        {{message}}
+    {% endif %}
+    <h1>Confirm Booking</h1><br>
+    <div>
+        Movie Name: {{movie.name}}
+        <br><br>
+        <form action="{% url 'bookmovie' movie.id %}" method = "POST" onsubmit="return check()">
+            {% csrf_token %}
+            <label for="slot">Select a Time Slot:</label>
+            <select name="slot" id="slot">
+            <option value="default">Time Slots</option>
+            {% for slot in slots %}
+                <option value = "{{slot.id}}">{{slot}}</option>
+            {% endfor %}
+            </select>
+            <br><br>
+            Enter number of tickets to be booked: <input style="width: 50px;" type = "number" id="tickets" name="tickets" min="1" max="10"/>
+            <br><br><br>
+            <button class="btn btn-primary" type="submit">Book</button>
+        </form>
+    </div><br>
+</div>
+</center>
+
+
+<script>
+
+function check(){
+    numbers = document.getElementById('tickets').value;
+    slot = document.getElementById('slot').value;
+    console.log(numbers);
+    console.log(slot);
+    if(slot.value=="default"){
+        window.alert("Please select a valid time slot");
+        return false;
+    }
+}
+
+</script>   
+{% endblock %}

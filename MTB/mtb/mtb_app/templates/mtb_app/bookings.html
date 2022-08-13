@@ -1,0 +1,22 @@
+{% extends "mtb_app/layout.html" %}
+
+{% block title %}
+    All Bookings
+{% endblock %}
+
+
+{% block body %}
+<h1>My Bookings:</h1>
+
+{% for booking in bookings %}
+<div class="card-body">
+Number of tickets booked: {{booking.tickets_booked}}<br>
+{{booking.show}}
+<p class="mb-2 text-muted">{{booking.booked_time}}</p>
+</div>
+</div    
+
+    
+    
+{% endfor %}
+{% endblock %}

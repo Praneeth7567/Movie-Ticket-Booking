@@ -1,0 +1,24 @@
+{% extends "mtb_app/layout.html" %}
+
+{% block title %}
+Theaters
+{% endblock %}
+
+
+{% block body %}
+<h1>Theaters</h1>
+
+{% for theater in theaters %}
+
+    <br>
+    <div class="card" style="width: 31rem; padding:10px;">
+        <div class="card-body">
+            <p class=" float-right">{{theater.capacity}} Seats</p>
+            <h3>{{theater.name}}</h3>
+    
+            <p class="mb-2 text-muted">{{theater.city}} - {{theater.location}}</p>
+        </div>
+    </div>      
+
+{% endfor %}
+{% endblock %}
