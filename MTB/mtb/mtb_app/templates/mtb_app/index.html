@@ -8,6 +8,8 @@
 {% block body %}
 <h1>Movies</h1>
 
+
+
 {% for movie in movies %}
 
     <br>
@@ -21,23 +23,23 @@
     </div></a>      
 
 {% endfor %}
-
+<br>
 <nav style="margin-left: 65px;">
     <ul class="pagination">
       
-        {% if page_obj.has_previous %}
+        {% if movies.has_previous %}
             <li class="page-item"><a class="page-link" href="?page=1" >&laquo; first</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{movies.previous_page_number }}">previous</a></li>
         {% else %}
             <li class="page-item disabled"><a class="page-link" >&laquo; first</a></li>
             <li class="page-item disabled"><a class="page-link">previous</a></li>
         {% endif %}
         
-        <li class="page-item active"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+        <li class="page-item active"><a class="page-link" href="?page={{ movies.number }}">{{ movies.number }}</a></li>
 
-        {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"> next</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+        {% if movies.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ movies.next_page_number }}"> next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ movies.paginator.num_pages }}">last &raquo;</a></li>
         {% else %}
             <li class="page-item disabled"><a class="page-link">next</a></li>
             <li class="page-item disabled"><a class="page-link">last &raquo;</a></li>

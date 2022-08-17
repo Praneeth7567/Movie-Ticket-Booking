@@ -1,0 +1,20 @@
+{% extends "mtb_app/layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block body %}
+<center>
+<div>
+    <form action="{% url 'result' %}", autocomplete="off">
+        <input type="text" name="search-txt" id="search-txt" placeholder="Search Movies or Theaters"/>
+    </form>
+    <br><br>
+    <form action="{% url 'result' %}", autocomplete="off">
+        <input type="date" name="search-date" id="search-date" placeholder="Search date"/>
+        <input type="submit" value="search"/>
+    </form>
+</div>
+</center>
+{% endblock %}

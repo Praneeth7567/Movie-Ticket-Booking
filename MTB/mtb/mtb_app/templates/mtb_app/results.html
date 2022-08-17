@@ -1,0 +1,82 @@
+{% extends "mtb_app/layout.html" %}
+
+{% block title %}
+Search Results
+{% endblock %}
+
+
+{% block body %}
+<h1>Search Results for {{search_txt}}:</h1>
+
+{% if message %}
+<h2 style="padding:10px">{{message}}</h2>
+{% endif %}
+
+{% if movies %}
+<br>
+Movies:
+<br>
+    {% for movie in movies %}
+    <br>
+    <a href="{% url 'bookmovie' movie.id %}"><div class="card" style="width: 31rem; padding:10px;">
+        <div class="card-body">
+            <p class=" float-right">IMBD: <i style="color: orange;" class="fa fa-star"></i>{{movie.rating}}/10</p>
+            <h3>{{movie.name}}({{movie.cnr}})</h3>
+            {{movie.description}}
+            <p class="mb-2 text-muted">{{movie.cast}}</p>
+        </div>
+    </div></a>      
+    {% endfor %}
+{% endif %}
+
+{% if theaters %}
+<br>
+Theaters:
+<br>
+    {% for theater in theaters %}
+    <br>
+    <div class="card" style="width: 31rem; padding:10px;">
+        <div class="card-body">
+            <p class=" float-right">{{theater.capacity}} Seats</p>
+            <h3>{{theater.name}}</h3>
+            <p class="mb-2 text-muted">{{theater.city}} - {{theater.location}}</p>
+        </div>
+    </div>      
+    {% endfor %}
+{% endif %}
+
+{% if shows %}
+{% if book %}
+<br>
+Shows:
+<br>
+    {% for show in shows %}
+    <br>
+    <a href="{% url 'bookmovie' show.movie.id %}">
+    <div class="card" style="width: 31rem; padding:10px;">
+        <div class="card-body">
+            <p class=" float-right">{{show.seats_avl}} Seats Avaliable</p>
+            <h3>{{show.movie.name}} - {{show.theater.name}}</h3>
+            <p class="mb-2 text-muted">{{show.date}}</p>
+        </div>
+    </div></a>        
+    {% endfor %}
+{% else %}
+<br>
+Shows:
+<br>
+    {% for show in shows %}
+    <br>
+    <div class="card" style="width: 31rem; padding:10px;">
+        <div class="card-body">
+            <p class=" float-right">{{show.seats_avl}} Seats Avaliable</p>
+            <h3>{{show.movie.name}} - {{show.theater.name}}</h3>
+            <p class="mb-2 text-muted">{{show.date}}</p>
+        </div>
+    </div>       
+    {% endfor %}
+{% endif %}
+{% endif %}
+
+
+{% endblock %}

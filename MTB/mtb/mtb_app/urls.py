@@ -10,5 +10,7 @@ urlpatterns = [
     path("bookings", views.bookings, name="bookings"),
     path("theaters", views.theater, name="theaters"),
     path("bookmovie/<int:id>", views.bookmovie, name="bookmovie"),
-   
+    path("result", views.search, name="result"),
+    path("search", views.search_page, name="search"),
+    
 ]

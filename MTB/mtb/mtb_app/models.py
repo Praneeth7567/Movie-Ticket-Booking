@@ -44,7 +44,7 @@ class Show(models.Model):
     def __str__(self):
         return f'{self.theater}:{self.date}, {self.timeslot}'
 
-class booked(models.Model):
+class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=CASCADE)
     show = models.ForeignKey(Show, on_delete=CASCADE)
     tickets_booked = models.IntegerField()
